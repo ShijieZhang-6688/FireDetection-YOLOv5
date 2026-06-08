@@ -35,6 +35,8 @@ python -m pip install -r requirements.txt
 
 如果使用 GPU，请根据本机 CUDA 版本从 PyTorch 官网安装匹配的 `torch` 和 `torchvision`。
 
+本仓库已兼容 PyTorch 2.6+ 的 checkpoint 加载行为：YOLOv5 v7.0 的完整模型 checkpoint 需要用 `weights_only=False` 加载。只对受信任的官方权重或本项目训练权重使用该路径。
+
 ## 数据集下载
 
 Roboflow 下载通常需要 API key。不要把 API key 写入 Git。

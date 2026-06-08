@@ -35,6 +35,8 @@ python -m pip install -r requirements.txt
 
 如果使用 GPU，请先根据 CUDA 版本安装匹配的 PyTorch。
 
+当前仓库对 YOLOv5 v7.0 做了一个小兼容补丁：在 PyTorch 2.6+ 默认 `weights_only=True` 的环境下，显式用 `weights_only=False` 加载受信任的 YOLOv5 checkpoint。这样可以正常加载官方 `yolov5n.pt` 和本项目训练出的 `best.pt`。
+
 ## 数据集
 
 论文记录的数据集：

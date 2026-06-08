@@ -43,6 +43,16 @@ def smart_inference_mode(torch_1_9=check_version(torch.__version__, '1.9.0')):
     return decorate
 
 
+def torch_load(*args, **kwargs):
+    # PyTorch 2.6 changed torch.load's default weights_only value to True.
+    # YOLOv5 checkpoints store full model objects, so trusted local checkpoints
+    # need weights_only=False. Fall back for older PyTorch versions.
+    try:
+        return torch.load(*args, weights_only=False, **kwargs)
+    except TypeError:
+        return torch.load(*args, **kwargs)
+
+
 def smartCrossEntropyLoss(label_smoothing=0.0):
     # Returns nn.CrossEntropyLoss with label smoothing enabled for torch>=1.10.0
     if check_version(torch.__version__, '1.10.0'):
