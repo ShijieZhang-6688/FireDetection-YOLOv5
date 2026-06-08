@@ -1,0 +1,11 @@
+# YOLOv5 fire detection dataset
+# Download with:
+#   python scripts/download_dataset.py
+
+path: ../datasets/fire-detect-1
+train: train/images
+val: valid/images
+test: test/images
+
+names:
+  0: fire
