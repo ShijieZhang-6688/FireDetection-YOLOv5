@@ -15,7 +15,7 @@
 | 模型 | YOLOv5n |
 | 类别 | `fire` |
 | 数据集 | Roboflow `yolo-j5nit/fire-detect-i7huf-0g2xe`, version 1 |
-| 数据量 | train 约 2026, valid 约 570, test 约 290 |
+| 数据量 | train 2026, valid 570, test 292 |
 | 输入尺寸 | 640 |
 | batch size | 24 |
 | epochs | 300 |

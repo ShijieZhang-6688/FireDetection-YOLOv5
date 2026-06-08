@@ -38,7 +38,18 @@ def parse_args() -> argparse.Namespace:
 def download_zip(api_key: str, target_zip: Path) -> None:
     url = f"https://api.roboflow.com/{WORKSPACE}/{PROJECT}/{VERSION}/{FORMAT}"
     params = {"api_key": api_key}
-    with requests.get(url, params=params, stream=True, timeout=120) as response:
+    with requests.get(url, params=params, timeout=120) as response:
+        response.raise_for_status()
+        content_type = response.headers.get("content-type", "")
+        if "application/json" in content_type:
+            export = response.json().get("export", {})
+            download_url = export.get("link")
+            if not download_url:
+                raise RuntimeError("Roboflow response did not include export.link.")
+        else:
+            download_url = response.url
+
+    with requests.get(download_url, stream=True, timeout=120) as response:
         response.raise_for_status()
         with target_zip.open("wb") as fh:
             for chunk in response.iter_content(chunk_size=1024 * 1024):

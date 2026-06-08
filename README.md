@@ -47,7 +47,7 @@ https://universe.roboflow.com/yolo-j5nit/fire-detect-i7huf-0g2xe/dataset/1
 
 - train: 约 2026 张
 - valid: 约 570 张
-- test: 约 290 张
+- test: 292 张
 - class: `fire`
 
 Roboflow 下载需要 API key：
