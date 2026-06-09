@@ -103,3 +103,41 @@ python detect.py --weights runs/train/fire_yolov5n_repro/weights/best.pt --sourc
 ## 更多记录
 
 复刻参数、数据集说明和结果记录模板见 [docs/reproduction.md](docs/reproduction.md)。
+
+## Reproduction result on RTX 4060
+
+The YOLOv5n fire-detection reproduction was completed on 2026-06-09 with the Roboflow dataset located at `datasets/fire-detect-1`.
+
+### Dataset and training setup
+
+| Item | Value |
+| --- | --- |
+| Dataset size | train 2026 / valid 570 / test 292 |
+| Model | YOLOv5n |
+| Input size | 640 |
+| Epochs | 300 |
+| Optimizer | SGD |
+| lr0 | 0.01 |
+| weight_decay | 5e-5 |
+| Actual batch size | 8 |
+| GPU | NVIDIA GeForce RTX 4060 Laptop GPU |
+| PyTorch | 2.4.0+cu118 |
+
+Batch 24 and batch 16 were not stable on this Windows/WDDM setup due to DataLoader/CUDA memory mapping errors. The successful smoke test and final training used batch 8 with `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` and `--workers 0`.
+
+### Final validation metrics
+
+Validation command:
+
+```powershell
+python val.py --weights runs/train/fire_yolov5n_repro/weights/best.pt --data data/fire.yaml --img 640
+```
+
+| Metric | Value |
+| --- | ---: |
+| Precision | 0.979 |
+| Recall | 0.954 |
+| mAP@0.5 | 0.982 |
+| mAP@0.5:0.95 | 0.722 |
+
+The training run completed all 300 epochs in `runs/train/fire_yolov5n_repro`. Generated artifacts include `results.png`, `confusion_matrix.png`, `PR_curve.png`, `F1_curve.png`, `P_curve.png`, `R_curve.png`, `weights/best.pt`, and `weights/last.pt`. Dataset files, run outputs, and `.pt` weights are intentionally excluded from Git.
